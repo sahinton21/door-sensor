@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html ng-app="myApp">
+
+<head>
+  <title>Is My Door Open?</title>
+
+  <meta http-equiv="refresh" content="30"> <!--Auto refresher-->
+
+  {% block javascript %}
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="{{ url_for('static', filename='index.js')}}"></script>
+  {% endblock %}
+</head>
+
+<body ng-cloak ng-controller="IndexController">
+  {% raw %}
+  <center>
+  <div>
+    <h2>Is My Door Open?</h2>
+    <p>Your door is {{door.status}}</p>
+    <!--Hide this info if needed or tell them their door is safe-->
+    <div ng-if="door.status.substring(0, 6) == 'Closed'">
+      <p>Do you want to arm the door alarm?</p>
+      <button ng-click="armDoor()">Arm Door</button>
+    </div>
+
+    <!--Show this info if the door is armed-->
+    <div ng-if="door.status == 'Alert'">
+      <p>Do you want to disarm the door and turn off the alarm?</p>
+      <button ng-click="disarmDoor()">Disarm Door</button>
+    </div>
+    
+  </div>
+  </center>
+
+  {% endraw %}
+</body>
+
+</html>
